@@ -34,11 +34,19 @@ router.get('/balanceinquiry', function(req, res, next) {
       if (error){
         throw new Error(error);
       } 
-      var d = new Buffer(body.optimizations[0].data, 'base64').toString('ascii');
-      res.send({ 
-        Body: d,  
-        Balance: '$35,324' 
-      });
+      try{
+        var d = new Buffer(body.optimizations[0].data, 'base64').toString('ascii');
+        res.send({ 
+          Body: d,  
+          Balance: '$35,324' 
+        });
+      }catch(exception){
+        res.send({ 
+          Body: "No optimizations were returned at this time.",  
+          Balance: '$35,324' 
+        });
+      }
+      
       console.log(body);
     });    
   });
